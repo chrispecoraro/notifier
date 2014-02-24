@@ -9,7 +9,7 @@ class EmailNotifierTest extends TestCase
     {
         Mail::shouldReceive('queue')->once();
 
-        $email = new \Skovachev\Notifier\Notifiers\EmailNotifier();
+        $email = new \Codengine\Notifier\Notifiers\EmailNotifier();
         
         Config::shouldReceive('get')->once()->with('notifier::email.enabled')->andReturn(true);
         Config::shouldReceive('get')->once()->with('notifier::views_folder')->andReturn('viewsFolder');
@@ -26,7 +26,7 @@ class EmailNotifierTest extends TestCase
 
     public function testPassesCorrectEmailParameters()
     {
-        $email = Mockery::mock('Skovachev\Notifier\Notifiers\EmailNotifier')->makePartial();
+        $email = Mockery::mock('Codengine\Notifier\Notifiers\EmailNotifier')->makePartial();
         
         Config::shouldReceive('get')->once()->with('notifier::email.enabled')->andReturn(true);
         Config::shouldReceive('get')->once()->with('notifier::views_folder')->andReturn('viewsFolder');

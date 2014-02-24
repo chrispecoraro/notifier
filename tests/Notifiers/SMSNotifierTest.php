@@ -17,7 +17,7 @@ class SMSNotifierTest extends TestCase
         $viewContent = Mockery::mock('stdClass');
         $viewContent->shouldReceive('render')->once()->andReturn('renderedContent');
 
-        $sms = new \Skovachev\Notifier\Notifiers\SMSNotifier($twilioClient);
+        $sms = new \Codengine\Notifier\Notifiers\SMSNotifier($twilioClient);
         
         Config::shouldReceive('get')->once()->with('notifier::sms.enabled')->andReturn(true);
         Config::shouldReceive('get')->once()->with('notifier::sms.getter_phone')->andReturn(function($user){

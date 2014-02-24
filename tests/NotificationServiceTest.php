@@ -1,6 +1,6 @@
 <?php
 
-use Skovachev\Notifier\NotificationService;
+use Codengine\Notifier\NotificationService;
 
 class NotificationServiceTest extends TestCase 
 {
@@ -9,9 +9,9 @@ class NotificationServiceTest extends TestCase
 
     protected function createService()
     {
-        $notifierSms = Mockery::mock('Skovachev\Notifier\Notifiers\SMSNotifier');
+        $notifierSms = Mockery::mock('Codengine\Notifier\Notifiers\SMSNotifier');
         $this->sms = $notifierSms;
-        $notifierEmail = Mockery::mock('Skovachev\Notifier\Notifiers\EmailNotifier');
+        $notifierEmail = Mockery::mock('Codengine\Notifier\Notifiers\EmailNotifier');
         $this->email = $notifierEmail;
         $notifiers = array($notifierSms, $notifierEmail);
 
@@ -28,7 +28,7 @@ class NotificationServiceTest extends TestCase
         $viewData = 'fooData';
         $subject = 'foobar';
 
-        $notification = Mockery::mock('Skovachev\Notifier\Notification');
+        $notification = Mockery::mock('Codengine\Notifier\Notification');
         $notification->shouldReceive('getUser')->andReturn($user);
         $notification->shouldReceive('getView')->andReturn($view);
         $notification->shouldReceive('getViewData')->andReturn($viewData);
@@ -47,7 +47,7 @@ class NotificationServiceTest extends TestCase
         $this->sms->shouldReceive('getNotifierKey')->once()->andReturn('sms');
         $this->email->shouldReceive('getNotifierKey')->once()->andReturn('email');
 
-        $notification = Mockery::mock('Skovachev\Notifier\Notification');
+        $notification = Mockery::mock('Codengine\Notifier\Notification');
         $notification->shouldReceive('getUser');
         $notification->shouldReceive('getView');
         $notification->shouldReceive('getViewData');
@@ -80,7 +80,7 @@ class NotificationServiceTest extends TestCase
         $this->sms->shouldReceive('getNotifierKey')->once()->andReturn('sms');
         $this->email->shouldReceive('getNotifierKey')->once()->andReturn('email');
 
-        $notification = Mockery::mock('Skovachev\Notifier\Notification');
+        $notification = Mockery::mock('Codengine\Notifier\Notification');
         $notification->shouldReceive('getUser');
         $notification->shouldReceive('getView');
         $notification->shouldReceive('getViewData');

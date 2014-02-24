@@ -1,6 +1,8 @@
-<?php namespace Skovachev\Notifier;
+<?php namespace Codengine\Notifier;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider {
+use Illuminate\Support\ServiceProvider;
+
+class NotifierServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -16,7 +18,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
      */
     public function boot()
     {
-        $this->package('skovachev/notifier');
+        $this->package('codengine/notifier');
     }
 
     /**
@@ -28,8 +30,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider {
     {
         $this->app['notifier'] = $this->app->share(function($app){
             return new NotificationService(array(
-                $app->make('Skovachev\Notifier\Notifiers\EmailNotifier'),
-                $app->make('Skovachev\Notifier\Notifiers\SMSNotifier'),
+                $app->make('Codengine\Notifier\Notifiers\EmailNotifier'),
+                $app->make('Codengine\Notifier\Notifiers\SMSNotifier'),
             ));
         });
     }

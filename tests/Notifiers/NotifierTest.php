@@ -7,7 +7,7 @@ class NotifierTest extends TestCase
 
     public function testGetOption()
     {
-        $notifier = Mockery::mock('Skovachev\Notifier\Notifiers\Notifier')->makePartial();
+        $notifier = Mockery::mock('Codengine\Notifier\Notifiers\Notifier')->makePartial();
         $notifier->shouldReceive('getNotifierKey')->andReturn('key');
 
         $optionValue = 'foo';
@@ -22,7 +22,7 @@ class NotifierTest extends TestCase
 
     public function testDoesNotNotifyIfNotificationsDisabled()
     {
-        $notifier = Mockery::mock('Skovachev\Notifier\Notifiers\Notifier')->makePartial();
+        $notifier = Mockery::mock('Codengine\Notifier\Notifiers\Notifier')->makePartial();
         $notifier->shouldReceive('getNotifierKey')->andReturn('key');
 
         Config::shouldReceive('get')->once()->with("notifier::key.enabled")->andReturn(false);
@@ -32,7 +32,7 @@ class NotifierTest extends TestCase
 
     public function testNotify()
     {
-        $notifier = Mockery::mock('Skovachev\Notifier\Notifiers\Notifier')->makePartial();
+        $notifier = Mockery::mock('Codengine\Notifier\Notifiers\Notifier')->makePartial();
         $notifier->shouldReceive('getNotifierKey')->andReturn('key');
         $notifier->shouldReceive('prepareDestination')->once()->with(array('subject'=>null))->andReturn('fooDestination');
         $notifier->shouldReceive('sendNotification')->once()->with('fooDestination', 'foobar.key.fooView', array('user' => 'fooUser'));

@@ -1,4 +1,4 @@
-<?php namespace Skovachev\Notifier\Notifiers;
+<?php namespace Codengine\Notifier\Notifiers;
 
 use Illuminate\Support\Facades\Mail;
 

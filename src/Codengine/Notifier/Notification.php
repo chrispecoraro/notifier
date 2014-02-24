@@ -1,4 +1,4 @@
-<?php namespace Skovachev\Notifier;
+<?php namespace Codengine\Notifier;
 
 use View;
 
