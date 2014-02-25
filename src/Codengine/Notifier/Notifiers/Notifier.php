@@ -12,7 +12,7 @@ abstract class Notifier
 
     public function notify($user, $view, $data, $subject = null)
     {
-        if ($this->notificationsEnabled($user))
+        if ($this->notificationsEnabled())
         {
             $this->user = $user;
 
@@ -45,6 +45,6 @@ abstract class Notifier
 
     private function getKeyPrefix()
     {
-        return 'notifier::' . $this->getNotifierKey() . '.';
+        return 'notifier::services.' . $this->getNotifierKey() . '.';
     }
 }
