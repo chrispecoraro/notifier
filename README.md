@@ -1,4 +1,4 @@
-# Notifier ![Build status](https://api.travis-ci.org/skovachev/notifier.png)
+# Notifier ![Build status](https://api.travis-ci.org/codengine/notifier.png)
 
 Some projects require user notifications to be sent out. In many cases there are multiple ways to notify an user about an event. This package makes it easier to send notifications using different notification channels.
 
@@ -8,7 +8,7 @@ You'll need to add the package to you `composer.json` file.
 
 ```js
 "require-dev": {
-    "skovachev/notifier": "dev-master"
+    "codengine/notifier": "dev-master"
 }
 ```
 
@@ -18,7 +18,7 @@ Once it's installed you will need to register its service provider with your app
 
 ```php
 'providers' => array(
-    'Skovachev\Notifier\ServiceProvider',
+    'Codengine\Notifier\ServiceProvider',
 )
 ```
 
@@ -26,7 +26,7 @@ You'll also need to update your `aliases` key as well.
 
 ```php
 'aliases' => array(
-    'Notifier' => 'Skovachev\Notifier\Facade',
+    'Notifier' => 'Codengine\Notifier\Facade',
 )
 ```
 
@@ -70,7 +70,7 @@ Notifier::sendEmailNotification($notification);
 
 If you wanted to change some package settings you can do so by publishing the configuration:
 ```
-php artisan config:publish skovachev/notifier
+php artisan config:publish codengine/notifier
 ```
 and editing the package's `config.php`.
 

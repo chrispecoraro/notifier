@@ -21,6 +21,19 @@ class NotifierServiceProvider extends ServiceProvider {
         $this->package('codengine/notifier');
     }
 
+    private function initServices($services)
+    {
+        return array_filter($services, function(&$service) use (&$services) {
+            if($service['enabled'])
+            {
+                $service['instance'] = new $service['class'];
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        });
+    }
+
     /**
      * Register the service provider.
      *
@@ -29,10 +42,8 @@ class NotifierServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->app['notifier'] = $this->app->share(function($app){
-            return new NotificationService(array(
-                $app->make('Codengine\Notifier\Notifiers\EmailNotifier'),
-                $app->make('Codengine\Notifier\Notifiers\SMSNotifier'),
-            ));
+            $services = $this->initServices($app->config->get('notifier::services'));
+            return new NotificationService($services);
         });
     }
 

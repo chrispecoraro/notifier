@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Config;
 use Codengine\Notifier\NotificationService;
 
 class NotificationServiceTest extends TestCase 
@@ -13,7 +14,16 @@ class NotificationServiceTest extends TestCase
         $this->sms = $notifierSms;
         $notifierEmail = Mockery::mock('Codengine\Notifier\Notifiers\EmailNotifier');
         $this->email = $notifierEmail;
-        $notifiers = array($notifierSms, $notifierEmail);
+        $notifiers = array(
+            'email' => array(
+                'enabled' => true,
+                'instance' => $notifierEmail
+            ),
+            'sms' => array(
+                'enabled' => true,
+                'instance' => $notifierSms
+            )
+        );
 
         $service = new NotificationService($notifiers);
 

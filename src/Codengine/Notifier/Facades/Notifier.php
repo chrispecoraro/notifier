@@ -1,8 +1,8 @@
-<?php namespace Skovachev\Notifier;
+<?php namespace Codengine\Notifier\Facades;
 
-use Illuminate\Support\Facades\Facade as IlluminateFacade;
+use Illuminate\Support\Facades\Facade;
 
-class Facade extends IlluminateFacade {
+class Notifier extends Facade {
 
     /**
      * Get the registered name of the component.

@@ -14,7 +14,7 @@ class NotificationService
         if (!empty($notifiers))
         {
             $notifiers = array_filter($this->notifiers, function($notifier) use ($notifiers) {
-                return in_array($notifier->getNotifierKey(), $notifiers);
+                return in_array($notifier['instance']->getNotifierKey(), $notifiers);
             });
         }
         else
@@ -23,7 +23,7 @@ class NotificationService
         }
 
         foreach ($notifiers as $notifier) {
-            $notifier->notify($notification->getUser(), $notification->getView(), $notification->getViewData(), $notification->getSubject());
+            $notifier['instance']->notify($notification->getUser(), $notification->getView(), $notification->getViewData(), $notification->getSubject());
         }
     }
 

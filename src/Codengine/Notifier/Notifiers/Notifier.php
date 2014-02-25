@@ -25,7 +25,7 @@ abstract class Notifier
         }
     }
 
-    public function notificationsEnabled($user)
+    public function notificationsEnabled()
     {
         return $this->getOption('enabled');
     }
