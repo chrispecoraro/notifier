@@ -7,6 +7,7 @@ class Notification implements \ArrayAccess
     protected $view = null;
     protected $user = null;
     protected $subject = null;
+    protected $body = null;
     protected $action = null;
     protected $type = null;
     protected $view_data = array();
@@ -35,6 +36,12 @@ class Notification implements \ArrayAccess
         return $this;
     }
 
+    public function setBody($body)
+    {
+        $this->body = $body;
+        return $this;
+    }
+
     public function setType($type)
     {
         $this->type = $type;
@@ -44,6 +51,7 @@ class Notification implements \ArrayAccess
     public function setAction($link)
     {
         $this->action = $link;
+        return $this;
     }
 
     public function setViewData($view_data)
@@ -78,6 +86,11 @@ class Notification implements \ArrayAccess
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    public function getBody()
+    {
+        return $this->body;
     }
 
     public function getType()

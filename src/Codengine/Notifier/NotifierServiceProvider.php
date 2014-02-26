@@ -18,7 +18,7 @@ class NotifierServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('codengine/notifier');
+        $this->package('codengine/notifier', 'codengine/notifier');
     }
 
     private function initServices(array $services)
@@ -42,7 +42,7 @@ class NotifierServiceProvider extends ServiceProvider {
     public function register()
     {
         $this->app['notifier'] = $this->app->share(function($app){
-            $services = $this->initServices($app->config->get('notifier::services'));
+            $services = $this->initServices($app['config']->get('codengine/notifier::services'));
             return new NotificationService($services);
         });
     }

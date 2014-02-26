@@ -5,11 +5,12 @@ use Codengine\Notifier\Notification;
 
 abstract class Notifier
 {
+    /** @var Notification */
     protected $notification;
 
     abstract public function getNotifierKey();
     abstract public function prepareDestination();
-    abstract public function sendNotification($destination, $view);
+    abstract public function sendNotification($destination, $view = null);
 
     public function notify(Notification $notification)
     {
@@ -17,7 +18,7 @@ abstract class Notifier
 
         if ($this->notificationsEnabled())
         {
-            $view = Config::get('notifier::views_folder') . '.' . $this->getNotifierKey() . '.' . $notification->getView();
+            $view = Config::get('codengine/notifier::views_folder') . '.' . $this->getNotifierKey() . '.' . $notification->getView();
             $destination = $this->prepareDestination();
             $this->sendNotification($destination, $view);
         }
@@ -53,6 +54,6 @@ abstract class Notifier
 
     private function getKeyPrefix()
     {
-        return 'notifier::services.' . $this->getNotifierKey() . '.';
+        return 'codengine/notifier::services.' . $this->getNotifierKey() . '.';
     }
 }

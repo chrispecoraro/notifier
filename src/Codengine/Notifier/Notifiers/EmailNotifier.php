@@ -1,11 +1,9 @@
 <?php namespace Codengine\Notifier\Notifiers;
 
-use Illuminate\Support\Facades\Mail as MailerFacade;
+use Illuminate\Support\Facades\Mail;
 
 class EmailNotifier extends Notifier
 {
-    protected $mailer;
-
     public function getNotifierKey()
     {
         return 'email';
@@ -24,7 +22,7 @@ class EmailNotifier extends Notifier
         return $destination;
     }
 
-    public function sendNotification($destination, $view)
+    public function sendNotification($destination, $view = null)
     {
         Mail::queue($view, $this->notification->getViewData(), function($message) use ($destination)
         {
