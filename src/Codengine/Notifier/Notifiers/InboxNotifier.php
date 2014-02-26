@@ -1,11 +1,12 @@
 <?php namespace Codengine\Notifier\Notifiers;
 
-use Codengine\Notifier\Models\Inbox;
+use Codengine\Notifier\Models\InboxInterface;
 
 class InboxNotifier extends Notifier {
+    /** @var InboxInterface $inboxModel */
     protected $inboxModel;
 
-    public function __construct(Inbox $inboxModel)
+    public function setModel(InboxInterface $inboxModel)
     {
         $this->inboxModel = $inboxModel;
     }
@@ -37,7 +38,8 @@ class InboxNotifier extends Notifier {
     public function sendNotification($destination, $view = null)
     {
         $message = $this->prepareMessage();
-        $entry = new $this->inboxModel($message);
+        $entry = clone $this->inboxModel;
+        $entry->fill($message);
         $entry->user_id = $destination['user_id'];
         $entry->save();
     }

@@ -5,7 +5,7 @@ use Codengine\Notifier\Notification;
 
 abstract class Notifier
 {
-    /** @var Notification */
+    /** @var Notification $notification */
     protected $notification;
 
     abstract public function getNotifierKey();

@@ -16,17 +16,19 @@ class NotificationService
         if (!empty($notifiers))
         {
             $notifiers = array_filter($this->notifiers, function($notifier) use ($notifiers) {
-                return in_array($notifier['instance']->getNotifierKey(), $notifiers);
+                return ($notifier['enabled'] && in_array($notifier['class_instance']->getNotifierKey(), $notifiers) ? TRUE : FALSE);
             });
         }
         else
         {
-            $notifiers = $this->notifiers;
+            $notifiers = array_filter($this->notifiers, function($notifier) {
+                return ($notifier['enabled'] ? TRUE : FALSE);
+            });
         }
 
-        foreach ($notifiers as $notifier) {
-            $notifier['instance']->notify($notification);
-        }
+        array_walk($notifiers, function($notifier) use ($notification){
+            $notifier['class_instance']->notify($notification);
+        });
     }
 
     public function createNotification(Model $user, $view = null)

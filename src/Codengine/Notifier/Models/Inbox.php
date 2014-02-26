@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inbox extends Model {
+class Inbox extends Model implements InboxInterface {
     protected $table = 'inbox';
     protected $fillable = array('user_id', 'type', 'subject', 'body');
     protected $guarded = array('status', 'created_at', 'updated_at');

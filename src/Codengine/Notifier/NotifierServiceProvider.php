@@ -23,15 +23,15 @@ class NotifierServiceProvider extends ServiceProvider {
 
     private function initServices(array $services)
     {
-        return array_filter($services, function(&$service) use ($services) {
-            if($service['enabled'])
+        array_walk($services, function(&$service){
+            $service['class_instance'] = $this->app->make($service['class']);
+            if(isset($service['model']) && method_exists($service['class_instance'], 'setModel'))
             {
-                $service['instance'] = $this->app->make($service['class']);
-                return TRUE;
-            } else {
-                return FALSE;
+                $service['model_instance'] = $this->app->make($service['model']);
+                $service['class_instance']->setModel($service['model_instance']);
             }
         });
+        return $services;
     }
 
     /**
