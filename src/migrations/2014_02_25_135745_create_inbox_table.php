@@ -18,7 +18,8 @@ class CreateInboxTable extends Migration {
             $table->string('type', 64)->default('default');
             $table->enum('status', array('read', 'unread'))->default('unread');
             $table->string('subject');
-            $table->text('body');
+            $table->text('body')->nullable();
+            $table->string('action')->nullable();
             $table->timestamps();
             $table->index('user_id');
             $table->index('type');

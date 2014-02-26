@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inbox extends Model {
     protected $table = 'inbox';
+    protected $fillable = array('user_id', 'type', 'subject', 'body');
+    protected $guarded = array('status', 'created_at', 'updated_at');
 
     public function scopeUser($query, $userId)
     {
@@ -14,4 +16,4 @@ class Inbox extends Model {
     {
         return $query->where('status', $status);
     }
-} 
+}
