@@ -13,8 +13,7 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "4.1.*",
-        "twilio/sdk": "3.12.*"
+        "illuminate/support": "4.1.*"
     },
     "require-dev": {
         "mockery/mockery": "dev-master@dev"
@@ -24,7 +23,7 @@
             "Codengine\\Notifier": "src/"
         },
         "classmap": [
-            "tests/TestCase.php"
+            "src/migrations"
         ]
     },
     "minimum-stability": "stable"
