@@ -6,33 +6,23 @@ return array(
         'email' => array(
             'class' => 'Codengine\Notifier\Notifiers\EmailNotifier',
             'enabled' => true,
-            'from_email' => null,
-            'from_name' => null,
+            'from_email' => 'notifications@email.com',
+            'from_name' => 'Notifications',
             'getter_email' => function($user) {
                 return $user->email;
-            },
-            'getter_firstname' => function($user) {
-                return $user->first_name;
-            },
-            'getter_lastname' => function($user) {
-                return $user->last_name;
             },
             'getter_name' => function($user) {
                 return $user->first_name . ' ' . $user->last_name;
             },
         ),
-        'sms' => array(
-            'class' => 'Codengine\Notifier\Notifiers\SMSNotifier',
-            'enabled' => false,
-            'getter_phone' => function($user) {
-                return $user->phone;
+        'inbox' => array(
+            'class' => 'Codengine\Notifier\Notifiers\InboxNotifier',
+            'model' => 'Codengine\Notifier\Models\Inbox',
+            'enabled' => true,
+            'per_page' => 10,
+            'getter_id' => function($user) {
+                return $user->id;
             },
-            // test credentials for Twilio
-            'twilio' => array(
-                'sid' => 'ACa4e541fc7a4b9ce6d8b4ce6e5ce4bf76',
-                'token' => 'f9721795b08fc35a3cde31b3650141ef',
-                'phone_number' => '+15005550006'
-            )
         )
     )
 );
