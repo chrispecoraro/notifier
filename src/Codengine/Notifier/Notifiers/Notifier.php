@@ -1,28 +1,36 @@
 <?php namespace Codengine\Notifier\Notifiers;
 
 use Illuminate\Support\Facades\Config;
+use Codengine\Notifier\Notification;
 
 abstract class Notifier
 {
-    protected $user;
+    protected $notification;
 
     abstract public function getNotifierKey();
-    abstract public function sendNotification($destination, $view, $data);
-    abstract public function prepareDestination($destination);
+    abstract public function prepareDestination();
+    abstract public function sendNotification($destination, $view);
 
-    public function notify($user, $view, $data, $subject = null)
+    public function notify(Notification $notification)
     {
+        $this->setNotification($notification);
+
         if ($this->notificationsEnabled())
         {
-            $this->user = $user;
-
-            $data['user'] = $user;
-            $view = Config::get('notifier::views_folder') . '.' . $this->getNotifierKey() . '.' . $view;
-
-            $destination = array('subject' => $subject);
-            $destination = $this->prepareDestination($destination);
-            $this->sendNotification($destination, $view, $data);
+            $view = Config::get('notifier::views_folder') . '.' . $this->getNotifierKey() . '.' . $notification->getView();
+            $destination = $this->prepareDestination();
+            $this->sendNotification($destination, $view);
         }
+    }
+
+    public function setNotification(Notification $notification)
+    {
+        $this->notification = $notification;
+    }
+
+    public function getNotification()
+    {
+        return $this->notification;
     }
 
     public function notificationsEnabled()
@@ -37,10 +45,10 @@ abstract class Notifier
         return $value;
     }
 
-    protected function obtainUserInfo($info)
+    protected function getUserInfo($info)
     {
         $callback = $this->getOption('getter_' . $info);
-        return $callback->__invoke($this->user);
+        return $callback->__invoke($this->notification->getUser());
     }
 
     private function getKeyPrefix()

@@ -1,37 +1,39 @@
 <?php namespace Codengine\Notifier\Notifiers;
 
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Mail as MailerFacade;
 
 class EmailNotifier extends Notifier
 {
+    protected $mailer;
+
     public function getNotifierKey()
     {
         return 'email';
     }
 
-    public function prepareDestination($destination)
+    public function prepareDestination()
     {
-        $destination['from_email'] = $this->getOption('from_email');
-        $destination['email'] = $this->obtainUserInfo('email');
-        $destination['name'] = $this->obtainUserInfo('name');
+        $destination = [
+            'from_name' => $this->getOption('from_name'),
+            'from_email' => $this->getOption('from_email'),
+            'to_email' => $this->getUserInfo('email'),
+            'to_name' => $this->getUserInfo('name'),
+            'subject' => $this->notification->getSubject()
+        ];
 
         return $destination;
     }
 
-    public function sendNotification($destination, $view, $data)
+    public function sendNotification($destination, $view)
     {
-        Mail::queue($view, $data, function($message) use ($destination)
+        Mail::queue($view, $this->notification->getViewData(), function($message) use ($destination)
         {
-            $email = array_get($destination, 'email');
-            $name = array_get($destination, 'name');
-            $subject = array_get($destination, 'subject');
-            $from_email = array_get($destination, 'from_email');
-            
-            $message->to($email, $name)->subject($subject);
+            $message->to($destination['to_email'], $destination['to_name'])
+                ->subject($destination['subject']);
 
-            if (!is_null($from_email))
+            if (!is_null($destination['from_email']))
             {
-                $message->from($from_email);
+                $message->from($destination['from_email'], (!is_null($destination['from_name']) ? $destination['from_name'] : null));
             }
         });
     }

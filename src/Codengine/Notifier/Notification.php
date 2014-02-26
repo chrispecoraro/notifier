@@ -1,41 +1,55 @@
 <?php namespace Codengine\Notifier;
 
-use View;
+use Illuminate\Database\Eloquent\Model;
 
 class Notification implements \ArrayAccess
 {
-    protected $view;
-    protected $user;
-    protected $subject;
-    protected $view_data;
+    protected $view = null;
+    protected $user = null;
+    protected $subject = null;
+    protected $action = null;
+    protected $type = null;
+    protected $view_data = array();
 
-    public function __construct($user, $view)
+    public function __construct(Model $user, $view = null)
     {
         $this->user = $user;
         $this->view = $view;
-
-        $this->view_data = array();
-        $this->subject = null;
     }
 
     public function setView($view)
     {
         $this->view = $view;
+        return $this;
     }
 
-    public function setUser($user)
+    public function setUser(Model $user)
     {
         $this->user = $user;
+        return $this;
     }
 
     public function setSubject($subject)
     {
         $this->subject = $subject;
+        return $this;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    public function setAction($link)
+    {
+        $this->action = $link;
     }
 
     public function setViewData($view_data)
     {
         $this->view_data = $view_data;
+        return $this;
     }
 
     public function getView()
@@ -50,12 +64,30 @@ class Notification implements \ArrayAccess
 
     public function getViewData()
     {
-        return $this->view_data;
+        return array_merge(
+            array(
+                'user' => $this->getUser(),
+                'action' => $this->getAction(),
+                'type' => $this->getType(),
+                'subject' => $this->getSubject()
+            ),
+            $this->view_data
+        );
     }
 
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function getAction()
+    {
+        return $this->action;
     }
 
     // array access of view data

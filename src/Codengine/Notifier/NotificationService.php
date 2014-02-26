@@ -1,15 +1,17 @@
 <?php namespace Codengine\Notifier;
 
+use Illuminate\Database\Eloquent\Model;
+
 class NotificationService
 {
     protected $notifiers = array();
 
-    public function __construct($notifiers = array())
+    public function __construct(array $notifiers = array())
     {
         $this->notifiers = $notifiers;
     }
 
-    public function sendNotification(Notification $notification, $notifiers = array())
+    public function sendNotification(Notification $notification, array $notifiers = array())
     {
         if (!empty($notifiers))
         {
@@ -23,11 +25,11 @@ class NotificationService
         }
 
         foreach ($notifiers as $notifier) {
-            $notifier['instance']->notify($notification->getUser(), $notification->getView(), $notification->getViewData(), $notification->getSubject());
+            $notifier['instance']->notify($notification);
         }
     }
 
-    public function createNotification($user, $view)
+    public function createNotification(Model $user, $view = null)
     {
         return new Notification($user, $view);
     }

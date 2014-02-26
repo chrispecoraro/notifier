@@ -21,12 +21,12 @@ class NotifierServiceProvider extends ServiceProvider {
         $this->package('codengine/notifier');
     }
 
-    private function initServices($services)
+    private function initServices(array $services)
     {
-        return array_filter($services, function(&$service) use (&$services) {
+        return array_filter($services, function(&$service) use ($services) {
             if($service['enabled'])
             {
-                $service['instance'] = new $service['class'];
+                $service['instance'] = $this->app->make($service['class']);
                 return TRUE;
             } else {
                 return FALSE;
