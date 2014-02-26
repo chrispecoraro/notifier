@@ -3,7 +3,7 @@
 use Codengine\Notifier\Models\InboxInterface;
 
 class InboxNotifier extends Notifier {
-    /** @var InboxInterface $inboxModel */
+    /** @var \Codengine\Notifier\Models\Inbox $inboxModel */
     protected $inboxModel;
 
     public function setModel(InboxInterface $inboxModel)
@@ -38,8 +38,7 @@ class InboxNotifier extends Notifier {
     public function sendNotification($destination, $view = null)
     {
         $message = $this->prepareMessage();
-        $entry = clone $this->inboxModel;
-        $entry->fill($message);
+        $entry = $this->inboxModel->newInstance($message);
         $entry->user_id = $destination['user_id'];
         $entry->save();
     }

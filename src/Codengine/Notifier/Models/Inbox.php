@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Inbox extends Model implements InboxInterface {
     protected $table = 'inbox';
-    protected $fillable = array('user_id', 'type', 'subject', 'body');
+    protected $fillable = array('user_id', 'type', 'subject', 'body', 'action');
     protected $guarded = array('status', 'created_at', 'updated_at');
 
     public function scopeUser($query, $userId)
