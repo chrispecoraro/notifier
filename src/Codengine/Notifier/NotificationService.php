@@ -49,6 +49,7 @@ class NotificationService
     public function inboxGetMessage($user_id, $message_id)
     {
         return $this->notifiers['inbox']['model_instance']->user($user_id)
+            ->where('id', $message_id)
             ->first();
     }
 
